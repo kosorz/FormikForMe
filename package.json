@@ -1,0 +1,31 @@
+{
+  "name": "formikforme",
+  "version": "1.0.0",
+  "description": "Just testing formik",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kosorz/FormikForMe.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kosorz/FormikForMe/issues"
+  },
+  "homepage": "https://github.com/kosorz/FormikForMe#readme",
+  "dependencies": {
+    "formik": "^2.1.4",
+    "parcel": "^1.12.4",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "parcel-bundler": "^1.12.4"
+  }
+}
