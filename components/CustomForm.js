@@ -1,43 +1,59 @@
 import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
+const SignupForm = (props) => {
 
-const CustomForm = () => {
+    const formik = useFormik({
+        initialValues: {
+            firstName: '',
+            lastName: '',
+            email: '',
+        },
+        validationSchema: Yup.object({
+            firstName: Yup.string()
+                .required(' Dawaj value gosciu'),
+            lastName: Yup.string()
+                .required(' Dawaj value gosciu')
+        }),
+        onSubmit: values => {
+            alert(JSON.stringify(values, null, 2));
+        },
+        validateOnMount: true
+    });
+
+    React.useEffect(() => {
+        props.updateParent(formik.isValid);
+    }, [formik.isValid]);
+
     return (
-        <Formik
-            initialValues={{ firstName: '', lastName: '', email: '' }}
-            validationSchema={Yup.object({
-                firstName: Yup.string()
-                    .max(15, 'Must be 15 characters or less')
-                    .required('Required'),
-                lastName: Yup.string()
-                    .max(20, 'Must be 20 characters or less')
-                    .required('Required'),
-                email: Yup.string()
-                    .email('Invalid email address')
-                    .required('Required'),
-            })}
-            onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
-                    setSubmitting(false);
-                }, 400);
-            }}
-        >
-            <Form>
-                <label htmlFor="firstName">First Name</label>
-                <Field name="firstName" type="text" />
-                <ErrorMessage name="firstName" />
-                <label htmlFor="lastName">Last Name</label>
-                <Field name="lastName" type="text" />
-                <ErrorMessage name="lastName" />
-                <label htmlFor="email">Email Address</label>
-                <Field name="email" type="email" />
-                <ErrorMessage name="email" />
-                <button type="submit">Submit</button>
-            </Form>
-        </Formik>
+        <form onSubmit={formik.handleSubmit}>
+            <label htmlFor="firstName">First Name</label>
+            <input
+                id="firstName"
+                name="firstName"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.firstName}
+            />
+            <label htmlFor="lastName">Last Name</label>
+            <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.lastName}
+            />
+            <label htmlFor="email">Email Address</label>
+            <input
+                id="email"
+                name="email"
+                type="email"
+                onChange={formik.handleChange}
+                value={formik.values.email}
+            />
+            <button type="submit">Submit</button>
+        </form>
     );
-}
+};
 
-export default CustomForm;
+export default SignupForm;

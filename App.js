@@ -3,7 +3,11 @@ import './App.css';
 import CustomForm from "./components/CustomForm";
 
 const App = () => {
-    return <CustomForm/>
+    const [errorState, setErrorState] = React.useState(undefined);
+
+    console.log(errorState);
+
+    return <CustomForm updateParent={setErrorState}/>
 }
 
 export default App;
