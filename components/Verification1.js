@@ -1,20 +1,22 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import MyDropzone from "./MyDropzone";
+
 const Verification1 = (props) => {
-
     const [requireLastName, setRequireLastName] = React.useState(false);
-
     const formik = useFormik({
         initialValues: {
             firstName: '',
             lastName: '',
             email: '',
+            file: '',
         },
         validationSchema: Yup.object({
             email: Yup.string()
-                .email('Gimme email dude not anything!').required(),
-            lastName: requireLastName && Yup.string().required('Gimme this name bijacz!'),
+                .email('Invalid email format').required(),
+            lastName: requireLastName && Yup.string().required('Name is required'),
+            file: Yup.mixed().required('File is required'),
         }),
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
@@ -34,6 +36,8 @@ const Verification1 = (props) => {
         }
     }, [formik.values.firstName]);
 
+    console.log(formik);
+
     return (
         <form onSubmit={formik.handleSubmit}>
 
@@ -43,14 +47,17 @@ const Verification1 = (props) => {
             {requireLastName && (
                 <>
                     <label htmlFor="lastName">Last Name</label>
-                    <input type="text"{...formik.getFieldProps('lastName')}/>
+                    <input type="text" {...formik.getFieldProps('lastName')}/>
                     {formik.touched.lastName && formik.errors.lastName && <div>{formik.errors.lastName}</div>}
                 </>
             )}
 
             <label htmlFor="email">Email Address</label>
-            <input type="email"{...formik.getFieldProps('email')}/>
+            <input type="email" {...formik.getFieldProps('email')}/>
             {formik.touched.email && formik.errors.email && <div>{formik.errors.email}</div>}
+
+            <MyDropzone name={'file'} setFieldValue={formik.setFieldValue} setTouched={(name) => formik.setTouched({...formik.touched, name})}/>
+            {formik.touched.file && formik.errors.file && <div>{formik.errors.file}</div>}
 
             <button type="submit">Submit</button>
         </form>
